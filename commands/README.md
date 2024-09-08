@@ -19,3 +19,13 @@ git add .
 git commit -m 'Mensagem'
 git remote add origin URL_DO_GIT
 ```
+Depois de dar o primeiro push...
+
+```
+.\.venv\scripts\activate
+python manage.pt startapp contact
+```
+ir até .\contact\apps.py
+verificar o "name"
+
+ir até .\project\settings.py em INSTALLED_APPS e adicionar o "name" que foi verificado
