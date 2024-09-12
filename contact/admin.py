@@ -7,7 +7,7 @@ from contact import models
 @admin.register(models.Contact)
 class ContactAdmin(admin.ModelAdmin):
     # display of items in the admin page
-    list_display = 'id', 'first_name', 'last_name', 'phone',
+    list_display = 'id', 'first_name', 'last_name', 'phone', 'category',
 
     # ORDER BY:
     # (if ordering = '-id', ORDER BY id DESC)
@@ -24,3 +24,11 @@ class ContactAdmin(admin.ModelAdmin):
 
     list_display_links = 'id', 'first_name',
     # list_filter = ('created_date',)
+
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = 'id', 'name',
+    ordering = 'id',
+    search_fields = 'id', 'name',
+    list_editable = 'name',
