@@ -27,8 +27,8 @@ class Contact(models.Model):
 
     show = models.BooleanField(default=True)
 
-    # cria uma pasta chamada pictures, dentro dela tem uma pasta com o ano
-    # e dentro do ano, tem os meses daquele ano
+    # creating a folder named pictures, inside, a folder with year, and inside
+    # of folder year, a folder with the months
     picture = models.ImageField(blank=True, upload_to='pictures/%Y/%m/')
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True)
