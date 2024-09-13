@@ -1,5 +1,6 @@
 from django.db import models
 import django.utils.timezone as tz
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -24,8 +25,10 @@ class Contact(models.Model):
     email = models.EmailField(max_length=254, blank=True)
     created_date = models.DateTimeField(default=tz.now)
     description = models.TextField(blank=True)
-
     show = models.BooleanField(default=True)
+
+    owner = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True)
 
     # creating a folder named pictures, inside, a folder with year, and inside
     # of folder year, a folder with the months
