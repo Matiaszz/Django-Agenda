@@ -7,7 +7,7 @@ from contact import models
 @admin.register(models.Contact)
 class ContactAdmin(admin.ModelAdmin):
     # display of items in the admin page
-    list_display = 'id', 'first_name', 'last_name', 'phone', 'category',
+    list_display = 'id', 'first_name', 'last_name', 'phone', 'category', 'show'
 
     # ORDER BY:
     # (if ordering = '-id', ORDER BY id DESC)
@@ -20,7 +20,7 @@ class ContactAdmin(admin.ModelAdmin):
 
     # show which values are editable on the main dashboard without having to
     #  enter the specific contact to edit.
-    # list_editable = 'first_name','last_name'
+    list_editable = 'show',
 
     list_display_links = 'id', 'first_name',
     # list_filter = ('created_date',)
