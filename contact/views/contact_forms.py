@@ -6,4 +6,7 @@ from django.core.paginator import Paginator
 
 def create(req):
     post = req.POST
+    context = {
+
+    }
     return render(req, 'contact/create.html')
