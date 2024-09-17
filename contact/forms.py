@@ -6,13 +6,13 @@ from django.core.exceptions import ValidationError
 
 class ContactForm(forms.ModelForm):
 
-    first_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'placeholder': 'This is forms.charfield'
-        }),
-        label='Your first name',
-        help_text='A help text for your user'
-    )
+    # first_name = forms.CharField(widget=forms.TextInput(
+    #     attrs={
+    #         'placeholder': 'This is forms.charfield'
+    #     }),
+    #     label='Your first name',
+    #     help_text='A help text for your user'
+    # )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -25,21 +25,27 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ('first_name', 'last_name', 'email', 'phone')
-        # widgets = {
-        #     'first_name': forms.TextInput(attrs={
-        #         'class': 'classeaA classeB',
-        #         'placeholder': 'This is widgets'
-        #     }),
-        #     'email': forms.EmailInput()
-        # }
+        fields = ('first_name', 'last_name', 'phone',
+                  'email', 'description', 'category',)
+        widgets = {
+            field: forms.TextInput(attrs={
+                'placeholder': f'Type your {field.replace("_", " ")}'})
+            for field in fields if field not in ['description',
+                                                 'category', 'email']
+        }
+        widgets['email'] = forms.EmailInput(attrs={  # type: ignore
+            'placeholder': 'Enter a valid email'
+        })
+        widgets['description'] = forms.Textarea(attrs={  # type: ignore
+            'placeholder': 'Enter a description'})
 
     def clean(self) -> dict[str, Any]:
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
         msg_error_duplicate_value = ValidationError(
-            'Não pode ser igual',)
+            'Error: duplicated value',)
 
+        # this is a temporary error check
         if first_name == last_name:
 
             self.add_error('first_name', msg_error_duplicate_value
@@ -50,10 +56,11 @@ class ContactForm(forms.ModelForm):
         return super().clean()
 
     # def clean_name_of_field
+    # this is a temporary error check
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
 
         if first_name == 'ABC':
-            self.add_error('first_name', ValidationError('Não pode ABC'))
+            self.add_error('first_name', ValidationError('ABC is not allowed'))
 
         return first_name
