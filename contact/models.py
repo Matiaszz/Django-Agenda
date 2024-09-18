@@ -21,7 +21,7 @@ class Contact(models.Model):
     # 60 because the longest name has 58 letters
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=60, blank=True)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=20)
     email = models.EmailField(max_length=254, blank=True)
     created_date = models.DateTimeField(default=tz.now)
     description = models.TextField(blank=True)
