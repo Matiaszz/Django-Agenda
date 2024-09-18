@@ -6,38 +6,31 @@ from django.core.exceptions import ValidationError
 
 class ContactForm(forms.ModelForm):
 
-    # first_name = forms.CharField(widget=forms.TextInput(
-    #     attrs={
-    #         'placeholder': 'This is forms.charfield'
-    #     }),
-    #     label='Your first name',
-    #     help_text='A help text for your user'
-    # )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # self.fields['first_name'].widget.attrs.update({
-        #     'placeholder': This is INIT',
-        #     'class': 'class1 class2',
-        # }
-        # )
 
     class Meta:
         model = Contact
         fields = ('first_name', 'last_name', 'phone',
-                  'email', 'description', 'category',)
+                  'email', 'description', 'category', 'picture')
         widgets = {
             field: forms.TextInput(attrs={
                 'placeholder': f'Type your {field.replace("_", " ")}'})
-            for field in fields if field not in ['description',
-                                                 'category', 'email']
+            for field in fields if field not in [
+                'description',
+                'category',
+                'email',
+                'picture'
+            ]
         }
         widgets['email'] = forms.EmailInput(attrs={  # type: ignore
             'placeholder': 'Enter a valid email'
         })
         widgets['description'] = forms.Textarea(attrs={  # type: ignore
             'placeholder': 'Enter a description'})
+
+        widgets['picture'] = forms.FileInput(attrs={  # type: ignore
+            'accept': 'image/*', })
 
     def clean(self) -> dict[str, Any]:
         first_name = self.cleaned_data.get('first_name')

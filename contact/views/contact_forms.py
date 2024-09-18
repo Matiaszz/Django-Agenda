@@ -7,7 +7,7 @@ from django.urls import reverse
 def create(req):
     form_action = reverse('contact:create')
     if req.method == 'POST':
-        form = ContactForm(req.POST)
+        form = ContactForm(req.POST, req.FILES)
         context = {
             'form': form,
             'form_action': form_action,
@@ -36,7 +36,7 @@ def update(req, contact_id):
     form_action = reverse('contact:update', args=(contact_id,))
 
     if req.method == 'POST':
-        form = ContactForm(req.POST, instance=contact)
+        form = ContactForm(req.POST,  req.FILES,  instance=contact)
         context = {
             'form': form,
             'form_action': form_action,

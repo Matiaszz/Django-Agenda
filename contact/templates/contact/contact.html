@@ -16,6 +16,11 @@
     <p><b>Created date: </b>{{contact.created_date}}</p>
   </div>
 
+  {% if contact.picture %}
+  <p>
+    <img src="{{contact.picture.url}}" alt="{{contact.first_name}} {{contact.last_name}} photo">
+  </p>
+  {% endif %}
   <div class="contact-links">
     <a class="btn btn-link" href="{% url 'contact:update' contact.id %}">Update</a>
 
@@ -29,5 +34,5 @@
       {% endif %}
     </form>
   </div>
-  </div>
+
 {% endblock content %}
