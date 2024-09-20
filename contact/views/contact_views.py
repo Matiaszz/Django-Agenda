@@ -4,21 +4,21 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 
 
-def index(req):
+def index(request):
     contacts = Contact.objects.filter(show=True).order_by('-id')
     paginator = Paginator(contacts, 25)
 
-    page_number = req.GET.get("page")
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {
         'page_obj': page_obj,
         'site_title': 'Contacts - ',
     }
-    return render(req, 'contact/index.html', context)
+    return render(request, 'contact/index.html', context)
 
 
-def contact(req, contact_id):
+def contact(request, contact_id):
     single_contact = get_object_or_404(Contact, pk=contact_id, show=True)
     contact_name = f'{single_contact.first_name} {single_contact.last_name}'
     context = {
@@ -26,11 +26,11 @@ def contact(req, contact_id):
         'site_title': f'{contact_name} - '
 
     }
-    return render(req, 'contact/contact.html', context)
+    return render(request, 'contact/contact.html', context)
 
 
-def search(req):
-    search_value = req.GET.get('q', '').strip()
+def search(request):
+    search_value = request.GET.get('q', '').strip()
 
     if search_value == '':
         return redirect('contact:index')
@@ -44,7 +44,7 @@ def search(req):
 
     paginator = Paginator(contacts, 25)
 
-    page_number = req.GET.get("page")
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {
@@ -52,4 +52,4 @@ def search(req):
         'site_title': 'Contacts - ',
         'value': search_value
     }
-    return render(req, 'contact/index.html', context)
+    return render(request, 'contact/index.html', context)
