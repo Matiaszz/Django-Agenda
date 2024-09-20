@@ -9,9 +9,6 @@ from django.contrib.auth import password_validation
 
 class ContactForm(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     class Meta:
         model = Contact
         fields = ('first_name', 'last_name', 'phone',
@@ -27,13 +24,16 @@ class ContactForm(forms.ModelForm):
             ]
         }
         widgets['email'] = forms.EmailInput(attrs={  # type: ignore
-            'placeholder': 'Enter a valid email'
+            'placeholder': 'Enter a valid email',
+            'required': True,
         })
         widgets['description'] = forms.Textarea(attrs={  # type: ignore
             'placeholder': 'Enter a description'})
 
-        widgets['picture'] = forms.FileInput(attrs={  # type: ignore
-            'accept': 'image/*', })
+        widgets['picture'] = forms.FileInput(  # type:ignore
+            attrs={'accept': 'image/*'})
+
+    # picture = forms.ImageField(required=False)
 
     def clean(self) -> dict[str, Any]:
         first_name = self.cleaned_data.get('first_name')
