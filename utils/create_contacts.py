@@ -1,13 +1,12 @@
+# from django.conf import settings
+# import django
+# from random import choice
+# from pathlib import Path
+# from datetime import datetime
+# import sys
+# import os
 # Execute this file to generate 1000 random contacts
 
-# import os
-# import sys
-# from datetime import datetime
-# from pathlib import Path
-# from random import choice
-
-# import django
-# from django.conf import settings
 
 # DJANGO_BASE_DIR = Path(__file__).parent.parent
 # NUMBER_OF_OBJECTS = 1000
