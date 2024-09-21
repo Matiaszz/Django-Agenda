@@ -25,26 +25,20 @@ def register(request):
 
 @login_required(login_url='contact:login')
 def user_update(request):
-    form = RegisterUpdateForm(instance=request.user)
+
+    if request.method == 'POST':
+        form = RegisterUpdateForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('contact:user_update')
+    else:
+
+        form = RegisterUpdateForm(instance=request.user)
+
     context = {
         'form': form
     }
-    if request.method != 'POST':
-        return render(
-            request,
-            'contact/update.html',
-            context
-        )
-    form = RegisterUpdateForm(data=request.POST, instance=request.user)
-    if not form.is_valid():
-
-        return render(
-            request,
-            'contact/update.html',
-            context
-        )
-    form.save()
-    return redirect('contact:user_update')
+    return render(request, 'contact/update.html', context)
 
 
 def login_view(request):
